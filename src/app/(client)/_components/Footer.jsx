@@ -6,8 +6,6 @@ import { Services } from "../data/data";
 const Footer = () => {
   const FooterText = "All rights are reserved store_name 2025";
 
- 
-
   return (
     <div className="pt-[20px]  w-full sticky">
       {/* // PC Footer Services Component */}

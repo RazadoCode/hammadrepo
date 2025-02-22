@@ -18,12 +18,12 @@ const Collection = () => {
       <div className="hidden sm:flex items-center justify-center gap-5 pb-[30px] pt-[20px] ">
         {CollectionImages.map((item, i) => (
           <Link href={`/productList/${item.href}`} key={i}>
-          <div  className="flex flex-col sm:w-[172px] sm:h-[172px]">
-            <img src={item.src} className="w-full rounded-full h-full" />
-            <p className="flex text-center items-center justify-center pt-[6px] font-[700]">
-              {item.name}
-            </p>
-          </div>
+            <div className="flex flex-col sm:w-[172px] sm:h-[172px]">
+              <img src={item.src} className="w-full rounded-full h-full" />
+              <p className="flex text-center items-center justify-center pt-[6px] font-[700]">
+                {item.name}
+              </p>
+            </div>
           </Link>
         ))}
       </div>
@@ -34,14 +34,14 @@ const Collection = () => {
             {CollectionImages.map((item, i) => (
               <CarouselItem key={i} className="">
                 <Link href={`/productList/${item.href}`}>
-                <div className="flex-col flex justify-center text-center w-[172px] rounded-full">
-                  <img
-                    src={item.src}
-                    alt={item.alt}
-                    className="w-full rounded-full h-[172px]"
-                  />
-                  <p className="font-[700] pt-[6px]">{item.name}</p>
-                </div>
+                  <div className="flex-col flex justify-center text-center w-[172px] rounded-full">
+                    <img
+                      src={item.src}
+                      alt={item.alt}
+                      className="w-full rounded-full h-[172px]"
+                    />
+                    <p className="font-[700] pt-[6px]">{item.name}</p>
+                  </div>
                 </Link>
               </CarouselItem>
             ))}

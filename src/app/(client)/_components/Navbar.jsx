@@ -1,15 +1,24 @@
-"use client"
-import Image from "next/image"
-import Logo from "../../../../public/images/logo.png"
-import Cart from "../../../../public/images/cart.png"
+"use client";
+import Image from "next/image";
+import Logo from "../../../../public/images/logo.png";
+import Cart from "../../../../public/images/cart.png";
 import Link from "next/link";
 import { NavLinks } from "../data/data";
-import { Menu } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet"
+import { Menu } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
+import { useCart } from "../Context/CartContext";
+
 
 const Navbar = () => {
-  const headerText = "Enjoy Free Delivery Above 5000PKR Order"
+  const headerText = "Enjoy Free Delivery Above 5000PKR Order";
+  const { totalItems } = useCart();
 
   return (
     <div className="w-full shadow-md bg-white">
@@ -28,26 +37,28 @@ const Navbar = () => {
           <SheetContent side="left">
             <SheetHeader>
               <SheetTitle>
-              <Link href="/">
-            <Image
-              className="w-[80px] sm:w-[120px] h-[60px] object-cover"
-              src={Logo || "/placeholder.svg"}
-              alt="Logo"
-              width={120}
-              height={60}
-            />
-          </Link>
+                <Link href="/">
+                  <Image
+                    className="w-[80px] sm:w-[120px] h-[60px] object-cover"
+                    src={Logo || "/placeholder.svg"}
+                    alt="Logo"
+                    width={120}
+                    height={60}
+                  />
+                </Link>
               </SheetTitle>
             </SheetHeader>
             <nav className="flex flex-col space-y-4 mt-8">
-            {/* className="text-gray-700 hover:text-gray-900" */}
-             {
-              NavLinks.map((item,i) => (
-                  <Link href={item.href} key={i} className="text-gray-700 hover:text-gray-900">
-                    {item.name}
-                  </Link>
-              ))
-             }
+              {/* className="text-gray-700 hover:text-gray-900" */}
+              {NavLinks.map((item, i) => (
+                <Link
+                  href={item.href}
+                  key={i}
+                  className="text-gray-700 hover:text-gray-900"
+                >
+                  {item.name}
+                </Link>
+              ))}
             </nav>
           </SheetContent>
         </Sheet>
@@ -80,17 +91,23 @@ const Navbar = () => {
         </nav>
 
         <Button variant="ghost" size="icon" className="ml-auto">
-          <Image src={Cart || "/placeholder.svg"} alt="Cart" width={24} height={24} />
-          <span className="sr-only">Open cart</span>
+          <Link href="/cart" className="relative">
+            <Image
+              src={Cart || "/placeholder.svg"}
+              alt="Cart"
+              width={25}
+              height={25}
+            />
+            {totalItems > 0 && (
+              <span className="absolute -top-2 -right-3 bg-red-500 text-white text-xs font-bold px-2 py-1 rounded-full">
+                {totalItems}
+              </span>
+            )}
+          </Link>
         </Button>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Navbar
-
-
-
-
-
+export default Navbar;

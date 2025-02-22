@@ -6,17 +6,15 @@ import { ProductsData } from "../../data/data";
 import { ShoppingBagIcon } from "lucide-react";
 import { useParams } from "next/navigation";
 import { sizes } from "../../data/data";
+import { useCart } from "../../Context/cartContext";
 
 const ProductDetails = () => {
   const params = useParams();
-  const [counter, setCounter] = useState(0);
-  if (counter === -1) {
-    setCounter(0);
-  };
-
-
-  const [selectedSize, setSelectedSize] = useState("L");
+  const { addToCart } = useCart();
   const id = params.id;
+  const product = ProductsData[id];
+  const [quantity, setQuantity] = useState(1);
+  const [selectedSize, setSelectedSize] = useState("L");
 
   return (
     <div className="">
@@ -24,28 +22,24 @@ const ProductDetails = () => {
         <div className="max-w-screen-xl px-4 mx-auto 2xl:px-0">
           <div className="sm:grid sm:grid-cols-2 sm:gap-3 md:gap-1 lg:gap-0 ">
             <div className="shrink-0 max-w-md lg:max-w-lg mx-auto">
-              <img
-                className="w-full dark:hidden"
-                src={ProductsData[id].img_d}
-                alt=""
-              />
+              <img className="w-full dark:hidden" src={product.img_d} alt="" />
               <img
                 className="w-full hidden dark:block"
-                src={ProductsData[id].img_d}
+                src={product.img_d}
                 alt=""
               />
             </div>
 
             <div className="mt-4 sm:mt-0 lg:mt-0">
               <h1 className="text-[20px] font-[600] text-[#000000] sm:text-[20px] lg:text-[25px] dark:text-white">
-                {ProductsData[id].eachName}
+                {product.eachName}
               </h1>
               <h1 className="text-[20px] font-[600] text-[#000000] sm:text-[20px] lg:text-[25px] dark:text-white">
-                {ProductsData[id].subname}
+                {product.subname}
               </h1>
               <div className="mt-2 sm:items-center sm:gap-4 sm:flex">
                 <p className="text-[#F60000] font-extrabold text-[15px] sm:text-[15px] dark:text-white">
-                  {ProductsData[id].price} {ProductsData[id].currency}
+                  {product.price} {product.currency}
                 </p>
               </div>
 
@@ -72,16 +66,16 @@ const ProductDetails = () => {
               <div className="flex items-center mt-[30px] md:mt-[50px]">
                 <div
                   className="bg-black flex items-center justify-center text-white w-[50px] h-[50px]"
-                  onClick={() => setCounter(counter - 1)}
+                  onClick={() => setQuantity(Math.max(1, quantity - 1))}
                 >
                   -
                 </div>
                 <div className="border flex items-center justify-center border-black w-[50px] h-[50px]">
-                  {counter}
+                  {quantity}
                 </div>
                 <div
                   className="bg-black text-white flex items-center justify-center w-[50px] h-[50px]"
-                  onClick={() => setCounter(counter + 1)}
+                  onClick={() => setQuantity(quantity + 1)}
                 >
                   +
                 </div>
@@ -91,6 +85,7 @@ const ProductDetails = () => {
               <Button
                 className="w-full py-6 text-[12px] my-5 md:mt-5 rounded-none"
                 size="lg"
+                onClick={() => addToCart(product, quantity, selectedSize)}
               >
                 <ShoppingBagIcon className="w-3 h-3 mr-2" />
                 Add to Cart
