@@ -12,7 +12,7 @@ import Link from "next/link";
 const OnSale = () => {
   return (
     <div className="w-full  sm:px-[32px]  pl-[10px] ">
-      <div className="text-[15px]  sm:text-[20px] font-[700] pt-[20px] pb-[20px] ">
+      <div className="text-[15px]  sm:text-[20px] font-[700] pt-[20px] cursor-pointer pb-[20px] ">
         <h1>On Sale</h1>
       </div>
 

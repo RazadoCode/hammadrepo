@@ -1,67 +1,9 @@
-// "use client";
-// import React from "react";
-// import { useCart } from "../Context/cartContext";
-
-// const Cart = () => {
-//   const { cart, removeFromCart, updateQuantity, subtotal } = useCart();
-//   const tax = 500;
-//   const shipping = 1000;
-//   return (
-//     <div className="font-sans">
-//       <div className="grid lg:grid-cols-3">
-//         <div className="lg:col-span-2 p-6 bg-white overflow-x-auto">
-//           <h2 className="text-xl font-bold text-gray-800 border-b pb-4">Shopping Cart ({cart.length} Items)</h2>
-//           <table className="mt-6 w-full border-collapse divide-y">
-//             <thead>
-//               <tr>
-//                 <th>Description</th>
-//                 <th>Quantity</th>
-//                 <th>Price</th>
-//               </tr>
-//             </thead>
-//             <tbody>
-//               {cart.map((item, index) => (
-//                 <tr key={index}>
-//                   <td>
-//                     <div className="flex items-center gap-4">
-//                       <img src={item.img_d} className="w-24 h-24" alt={item.name} />
-//                       <div>
-//                         <p>{item.eachName} ({item.size})</p>
-//                         <button onClick={() => removeFromCart(item.id, item.size)}>Remove</button>
-//                       </div>
-//                     </div>
-//                   </td>
-//                   <td>
-//                     <button onClick={() => updateQuantity(item.id, item.size, item.quantity - 1)} disabled={item.quantity <= 1}>-</button>
-//                     {item.quantity}
-//                     <button onClick={() => updateQuantity(item.id, item.size, item.quantity + 1)}>+</button>
-//                   </td>
-//                   <td>PKR {item.price * item.quantity}</td>
-//                 </tr>
-//               ))}
-//             </tbody>
-//           </table>
-//         </div>
-//         <div className="bg-gray-50 p-6 lg:sticky lg:top-0 lg:h-screen">
-//           <h2 className="text-xl font-bold text-gray-800 border-b pb-4">Order Summary</h2>
-//           <ul>
-//             <li>Subtotal: PKR {subtotal}</li>
-//             <li>Shipping: PKR {shipping}</li>
-//             <li>Tax: PKR {tax}</li>
-//             <li>Total: PKR {subtotal + shipping + tax}</li>
-//           </ul>
-//         </div>
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default Cart;
 
 "use client";
 import React from "react";
 import { ProductsData } from "../data/data";
-import { useCart } from "../Context/cartContext";
+import { useCart } from "../Context/CartContext";
+
 
 const Cart = () => {
   const { cart, removeFromCart, updateQuantity, subtotal } = useCart();

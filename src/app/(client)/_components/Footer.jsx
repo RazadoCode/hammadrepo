@@ -9,7 +9,7 @@ const Footer = () => {
   return (
     <div className="pt-[20px]  w-full sticky">
       {/* // PC Footer Services Component */}
-      <div className="py-[20px] md:flex  items-center justify-center gap-[55px] hidden ">
+      <div className="py-[20px] md:flex  items-center justify-center cursor-pointer gap-[55px] hidden ">
         {Services.map((item, i) => (
           <div className="flex items-center justify-center pb-5" key={i}>
             <img
@@ -46,7 +46,7 @@ const Footer = () => {
 
       <div className="flex justify-between md:flex-row flex-col   w-full text-white bg-black h-full md:px-[32px] px-[20px] py-[25px]">
         <div className="flex flex-col gap-[15px]">
-          <p className="text-[13px] lg:text-[15px] font-[700]">
+          <p className="text-[13px] lg:text-[15px] font-[700] cursor-pointer">
             Become our Customer
           </p>
           <div className="flex flex-col gap-[10px]">
@@ -62,13 +62,13 @@ const Footer = () => {
               Button
             </Button>
           </div>
-          <p className="text-[11px] lg:text=[12px] font-[400] text-[#FFFFFF]">
+          <p className="text-[11px] lg:text=[12px] font-[400] cursor-pointer text-[#FFFFFF]">
             Subscribe us to get all latest news and new launch updates.
           </p>
         </div>
 
         <div className="flex md:flex-row flex-col md:gap-[60px] gap-[30px] md:pt-0 pt-[20px] ">
-          <div className="flex flex-col gap-[10px]">
+          <div className="flex flex-col gap-[10px] cursor-pointer">
             <p className="text-[15px] font-[600]">Social Media</p>
             <ul className="text-[12px] font-[400]">Instagram</ul>
             <ul className="text-[12px] font-[400]">Facebook</ul>
@@ -76,14 +76,14 @@ const Footer = () => {
             <ul className="text-[12px] font-[400]">Tiktok</ul>
           </div>
 
-          <div className="flex flex-col gap-[10px]">
+          <div className="flex flex-col gap-[10px] cursor-pointer">
             <p className="text-[15px] font-[600]">Pages</p>
             <ul className="text-[12px] font-[400]">Return Policy</ul>
             <ul className="text-[12px] font-[400]">Shipping Policy</ul>
             <ul className="text-[12px] font-[400]">Privacy Policy</ul>
           </div>
 
-          <div className="flex flex-col gap-[10px]">
+          <div className="flex flex-col gap-[10px] cursor-pointer">
             <p className="text-[15px] font-[600]">Read</p>
             <ul className="text-[12px] font-[400]">About Us</ul>
             <ul className="text-[12px] font-[400]">Contact</ul>

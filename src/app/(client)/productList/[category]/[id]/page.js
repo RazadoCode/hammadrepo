@@ -9,7 +9,8 @@ import { khaddarData } from "@/app/(client)/data/data";
 import { ShoppingBagIcon } from "lucide-react";
 import { useParams } from "next/navigation";
 import BestSellers from "@/app/(client)/_components/BestSellers";
-import { useCart } from "@/app/(client)/Context/cartContext";
+import { useCart } from "@/app/(client)/Context/CartContext";
+
 
 const CategoryProductDetails = () => {
   let EachCategoryData;
@@ -39,7 +40,7 @@ const CategoryProductDetails = () => {
       <section className="py-8 bg-white md:py-16 dark:bg-gray-900 antialiased">
         <div className="max-w-screen-xl px-4 mx-auto 2xl:px-0">
           <div className="sm:grid sm:grid-cols-2 sm:gap-3 md:gap-1 lg:gap-0 ">
-            <div className="shrink-0 max-w-md lg:max-w-lg mx-auto">
+            <div className="shrink-0 max-w-md lg:max-w-lg mx-auto cursor-pointer">
               <img className="w-full dark:hidden" src={product.img_d} alt="" />
               <img
                 className="w-full hidden dark:block"
@@ -48,7 +49,7 @@ const CategoryProductDetails = () => {
               />
             </div>
 
-            <div className="mt-4 sm:mt-0 lg:mt-0">
+            <div className="mt-4 sm:mt-0 lg:mt-0 cursor-pointer">
               <h1 className="text-[20px] font-[600] text-[#000000] sm:text-[20px] lg:text-[25px] dark:text-white">
                 {product.eachName}
               </h1>
@@ -81,22 +82,22 @@ const CategoryProductDetails = () => {
                 ))}
               </div>
 
-              <div className="flex items-center mt-[30px] md:mt-[50px]">
-                <div
-                  className="bg-black flex items-center justify-center text-white w-[50px] h-[50px]"
+              <div className="flex cursor-pointer items-center mt-[30px] md:mt-[50px] ">
+                <button
+                  className="bg-black flex items-center justify-center cursor-pointer  text-white w-[50px] h-[50px]"
                   onClick={() => setQuantity(Math.max(1, quantity - 1))}
                 >
                   -
-                </div>
-                <div className="border flex items-center justify-center border-black w-[50px] h-[50px]">
+                </button>
+                <div className="border flex items-center  cursor-pointer justify-center border-black w-[50px] h-[50px]">
                   {quantity}
                 </div>
-                <div
-                  className="bg-black text-white flex items-center justify-center w-[50px] h-[50px]"
+                <button
+                  className="bg-black text-white flex items-center cursor-pointer justify-center w-[50px] h-[50px]"
                   onClick={() => setQuantity(quantity + 1)}
                 >
                   +
-                </div>
+                </button>
               </div>
 
               {/* Add to Cart Button */}

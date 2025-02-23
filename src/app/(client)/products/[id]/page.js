@@ -6,7 +6,8 @@ import { ProductsData } from "../../data/data";
 import { ShoppingBagIcon } from "lucide-react";
 import { useParams } from "next/navigation";
 import { sizes } from "../../data/data";
-import { useCart } from "../../Context/cartContext";
+import { useCart } from "../../Context/CartContext";
+
 
 const ProductDetails = () => {
   const params = useParams();
@@ -30,7 +31,7 @@ const ProductDetails = () => {
               />
             </div>
 
-            <div className="mt-4 sm:mt-0 lg:mt-0">
+            <div className="mt-4 sm:mt-0 lg:mt-0 cursor-pointer">
               <h1 className="text-[20px] font-[600] text-[#000000] sm:text-[20px] lg:text-[25px] dark:text-white">
                 {product.eachName}
               </h1>
@@ -64,21 +65,21 @@ const ProductDetails = () => {
               </div>
 
               <div className="flex items-center mt-[30px] md:mt-[50px]">
-                <div
+                <button
                   className="bg-black flex items-center justify-center text-white w-[50px] h-[50px]"
                   onClick={() => setQuantity(Math.max(1, quantity - 1))}
                 >
                   -
-                </div>
-                <div className="border flex items-center justify-center border-black w-[50px] h-[50px]">
+                </button>
+                <div className="border flex cursor-pointer items-center justify-center border-black w-[50px] h-[50px]">
                   {quantity}
                 </div>
-                <div
+                <button
                   className="bg-black text-white flex items-center justify-center w-[50px] h-[50px]"
                   onClick={() => setQuantity(quantity + 1)}
                 >
                   +
-                </div>
+                </button>
               </div>
 
               {/* Add to Cart Button */}

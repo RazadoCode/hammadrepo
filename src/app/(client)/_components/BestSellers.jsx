@@ -12,7 +12,7 @@ import Link from "next/link";
 const BestSellers = () => {
   return (
     <div className="w-full  sm:px-[32px] pl-[10px] ">
-      <div className="text-[15px]  sm:text-[20px] font-[700] pt-[20px] pb-[20px] ">
+      <div className="text-[15px]  sm:text-[20px] cursor-pointer font-[700] pt-[20px] pb-[20px] ">
         <h1>Best Sellers</h1>
       </div>
 
@@ -24,12 +24,12 @@ const BestSellers = () => {
                 <Link href={`/products/${item.id}`}>
                   <img
                     src={item.img_d}
-                    className="h-[80%] w-full items-center justify-center object-cover"
+                    className="h-[80%] w-full items-center cursor-pointer justify-center object-cover"
                   />
-                  <p className="text-[11px] font-[700] pt-[5px] text-center">
+                  <p className="text-[11px] font-[700] cursor-pointer pt-[5px] text-center">
                     {item.name}
                   </p>
-                  <p className=" italic text-[10px] font-[600] text-center text-[#454545]">
+                  <p className=" italic text-[10px] font-[600] cursor-pointer text-center text-[#454545]">
                     {item.price} {item.currency}
                   </p>
                 </Link>
