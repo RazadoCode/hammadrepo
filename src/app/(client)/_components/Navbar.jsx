@@ -14,11 +14,15 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { useCart } from "../Context/CartContext";
+import { useSnapshot } from "valtio";
+import { state } from "../../../../store/store";
 
 
 const Navbar = () => {
   const headerText = "Enjoy Free Delivery Above 5000PKR Order";
   const { totalItems } = useCart();
+
+  const {categories}= useSnapshot(state)
 
   return (
     <div className="w-full shadow-md bg-white">
@@ -50,13 +54,13 @@ const Navbar = () => {
             </SheetHeader>
             <nav className="flex flex-col space-y-4 mt-8">
               {/* className="text-gray-700 hover:text-gray-900" */}
-              {NavLinks.map((item, i) => (
+              {categories?.map((item, i) => (
                 <Link
-                  href={item.href}
+                  href={"/productList/"+item?._id}
                   key={i}
-                  className="text-gray-700 hover:text-gray-900"
+                  className="text-gray-700 hover:text-gray-900 uppercase"
                 >
-                  {item.name}
+                  {item?.name}
                 </Link>
               ))}
             </nav>

@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import BestSellers from "../../_components/BestSellers";
 import { Button } from "@/components/ui/button";
 import { ProductsData } from "../../data/data";
@@ -7,6 +7,11 @@ import { ShoppingBagIcon } from "lucide-react";
 import { useParams } from "next/navigation";
 import { sizes } from "../../data/data";
 import { useCart } from "../../Context/CartContext";
+import { client } from "@/sanity/lib/client";
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
+import { urlFor } from "@/sanity/lib/image";
+import { useSnapshot } from "valtio";
+import { state } from "../../../../../store/store";
 
 
 const ProductDetails = () => {
@@ -16,38 +21,84 @@ const ProductDetails = () => {
   const product = ProductsData[id];
   const [quantity, setQuantity] = useState(1);
   const [selectedSize, setSelectedSize] = useState("L");
+  const [item, setItem] = useState([])
+
+  const {sale} = useSnapshot(state)
+
+
+  const fetchProducts = async () => {
+      try {
+        const products =
+          await client.fetch(`* [_type == "product" && _id == "${params.id}" ]
+          {
+            name,
+            _id,
+            images,
+            price,
+            onSale,
+            sizes,
+            description,
+            inStock
+    }
+          `);
+  
+          setItem(products[0])
+      } catch (error) {
+        console.log(error);
+      }
+  
+      
+    };
+    useEffect(()=>{
+      fetchProducts()
+    },[])
+
 
   return (
     <div className="">
-      <section className="py-8 bg-white md:py-16 dark:bg-gray-900 antialiased">
-        <div className="max-w-screen-xl px-4 mx-auto 2xl:px-0">
-          <div className="sm:grid sm:grid-cols-2 sm:gap-3 md:gap-1 lg:gap-0 ">
-            <div className="shrink-0 max-w-md lg:max-w-lg mx-auto">
-              <img className="w-full dark:hidden" src={product.img_d} alt="" />
-              <img
-                className="w-full hidden dark:block"
-                src={product.img_d}
-                alt=""
-              />
+<section className="py-8 bg-white dark:bg-gray-900 antialiased">
+        <div className="w-full max-w-[1880px] px-[10px] mx-auto">
+          <div className="flex flex-col md:flex-row gap-[25px]">
+            <div className="shrink-0 w-full md:w-[45%]">
+            <Carousel className="overflow-hidden">
+          <CarouselContent>
+          {item?.images?.map((item, i) => (
+              <CarouselItem key={i} className="">
+                <img className="w-full dark:hidden" src={urlFor(item)} alt="" />
+                <img
+                  className="w-full hidden dark:block"
+                  src={urlFor(item)}
+                  alt=""
+                />
+              </CarouselItem>
+            ))}
+          </CarouselContent>
+                  <CarouselPrevious className="ml-[60px] hidden  sm:flex items-center" />
+                  <CarouselNext className="mr-[60px] hidden sm:flex items-center" />
+        </Carousel>
             </div>
 
-            <div className="mt-4 sm:mt-0 lg:mt-0 cursor-pointer">
-              <h1 className="text-[20px] font-[600] text-[#000000] sm:text-[20px] lg:text-[25px] dark:text-white">
-                {product.eachName}
+            <div className="mt-4 md:p-[20px] sm:mt-0 lg:mt-0 cursor-pointer">
+               
+              <h1 className="text-[20px] font-[600] text-[#000000] sm:text-[25px] lg:text-[45px] leading-[110%] dark:text-white">
+                {item?.name}
               </h1>
-              <h1 className="text-[20px] font-[600] text-[#000000] sm:text-[20px] lg:text-[25px] dark:text-white">
-                {product.subname}
-              </h1>
+            
+              
               <div className="mt-2 sm:items-center sm:gap-4 sm:flex">
-                <p className="text-[#F60000] font-extrabold text-[15px] sm:text-[15px] dark:text-white">
-                  {product.price} {product.currency}
+                <p className="text-[#F60000] font-bold text-[25px] mt-[10px] sm:text-[20px] flex items-center gap-[20px] dark:text-white">
+              PKR  {item?.onSale ? item?.price* ((100-sale?.percentageOff)/100) : item?.price} {item?.onSale && <span className="line-through font-bold text-[13px] italic">PKR {item?.price}</span>}
                 </p>
               </div>
 
-              <hr className="my-2 md:my-2 border-gray-200 dark:border-gray-800" />
+              {/* <hr className="my-2 md:my-2 border-gray-200 dark:border-gray-800" /> */}
+<div className=" mt-5">
 
+
+              <h2 className="text-[15px] font-[700] mb-2">Sizes:</h2>
               <div className="flex space-x-4">
-                {sizes.map((size) => (
+
+                {item?.sizes?.map((size) => (
                   <button
                     key={size}
                     onClick={() => setSelectedSize(size)}
@@ -63,8 +114,9 @@ const ProductDetails = () => {
                   </button>
                 ))}
               </div>
+              </div>
 
-              <div className="flex items-center mt-[30px] md:mt-[50px]">
+              <div className="flex items-center mt-[25px] md:mt-[30px]">
                 <button
                   className="bg-black flex items-center justify-center text-white w-[50px] h-[50px]"
                   onClick={() => setQuantity(Math.max(1, quantity - 1))}
@@ -83,21 +135,23 @@ const ProductDetails = () => {
               </div>
 
               {/* Add to Cart Button */}
+              {!item?.inStock && <p className="text-[#F60000] mt-5 font-bold text-[15px] sm:text-[15px] dark:text-white">
+                   Product out of Stock
+                </p>}
               <Button
-                className="w-full py-6 text-[12px] my-5 md:mt-5 rounded-none"
+                className={`w-full py-6 text-[12px] my-5 md:mt-5 rounded-none ${item?.inStock ? "cursor-pointer" : "cursor-not-allowed"}`}
                 size="lg"
-                onClick={() => addToCart(product, quantity, selectedSize)}
+                onClick={() => addToCart(item, quantity, selectedSize)}
+                disabled={item?.inStock ? false : true}
               >
                 <ShoppingBagIcon className="w-3 h-3 mr-2" />
                 Add to Cart
               </Button>
 
-              <p className="text-[12px] font-[700] mt-2">Details:</p>
+              <h2 className="text-[15px] font-[700] mt-2">Details:</h2>
               <p className="mb-6 text-[12px] font-[400]">
-                Lorem Ipsum is simply dummy text of the printing and typesetting
-                industry. Lorem Ipsum has been the industry's standard dummy
-                text ever since the 1500s, when an unknown printer took a galley
-                of type and scrambled it to make a type specimen book.
+                {item?.description || ""}
+              {/* <SanityBlockContent blocks={item?.description} /> */}
               </p>
             </div>
           </div>

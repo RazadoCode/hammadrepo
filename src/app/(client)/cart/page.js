@@ -3,15 +3,21 @@
 import React from "react";
 import { ProductsData } from "../data/data";
 import { useCart } from "../Context/CartContext";
+import { urlFor } from "@/sanity/lib/image";
+import { useSnapshot } from "valtio";
+import { state } from "../../../../store/store";
+import Link from "next/link";
 
 
 const Cart = () => {
+  const {sale}= useSnapshot(state)
   const { cart, removeFromCart, updateQuantity, subtotal } = useCart();
   const tax = 500;
-  const shipping = 1000;
+  const shipping = 250;
 
   return (
     <div className="font-sans">
+      <title>Cart | Gulnar</title>
       <div className="grid lg:grid-cols-3">
         {/* Cart Items Select */}
         <div className="lg:col-span-2 p-6 bg-white overflow-x-auto">
@@ -38,22 +44,19 @@ const Cart = () => {
                     <div className="flex items-center gap-4 w-max">
                       <div className="w-24 h-24 shrink-0">
                         <img
-                          src={item.img_d}
+                          src={urlFor(item?.images[0])}
                           className="w-full h-full object-cover"
-                          alt={item.name}
+                          alt={item?.name}
                         />
                       </div>
                       <div>
                         <p className="text-base font-bold text-gray-800">
-                          {item.eachName} ({item.size})
-                        </p>
-                        <p className="text-base font-bold text-gray-800">
-                          {item.subname}
+                          {item?.name} ({item?.size})
                         </p>
                         <button
                           type="button"
                           className="mt-2 font-semibold text-red-400 text-sm"
-                          onClick={() => removeFromCart(item.id, item.size)}
+                          onClick={() => removeFromCart(item._id, item.size)}
                         >
                           Remove
                         </button>
@@ -63,19 +66,19 @@ const Cart = () => {
                   <td className="flex items-center mt-2 pt-10">
                     <button
                       onClick={() =>
-                        updateQuantity(item.id, item.size, item.quantity - 1)
+                        updateQuantity(item._id, item.size, item.quantity - 1)
                       }
-                      disabled={item.quantity <= 1}
+                      disabled={item?.quantity <= 1}
                       className="sm:py-2 py-1 px-2 sm:px-4 bg-black text-white rounded"
                     >
                       -
                     </button>
                     <span className="sm:px-4 sm:py-2 py-1 px-2">
-                      {item.quantity}
+                      {item?.quantity}
                     </span>
                     <button
                       onClick={() =>
-                        updateQuantity(item.id, item.size, item.quantity + 1)
+                        updateQuantity(item?._id, item?.size, item?.quantity + 1)
                       }
                       className="sm:py-2 sm:px-4 py-1 px-2 bg-black text-white rounded"
                     >
@@ -84,7 +87,7 @@ const Cart = () => {
                   </td>
                   <td className="p-4">
                     <h4 className="text-base font-bold text-gray-800">
-                      PKR {item.price * item.quantity}
+                      PKR {item?.onSale? (item?.price*((100-sale?.percentageOff)/100))*item?.quantity : item?.price * item?.quantity}
                     </h4>
                   </td>
                 </tr>
@@ -104,23 +107,25 @@ const Cart = () => {
               Subtotal <span className="ml-auto font-bold">PKR {subtotal}</span>
             </li>
             <li className="flex flex-wrap gap-4 text-base py-3">
-              Shipping <span className="ml-auto font-bold">PKR{shipping}</span>
+              Shipping <span className="ml-auto font-bold">PKR {shipping}</span>
             </li>
-            <li className="flex flex-wrap gap-4 text-base py-3">
+            {/* <li className="flex flex-wrap gap-4 text-base py-3">
               Tax <span className="ml-auto font-bold">{tax}</span>
-            </li>
+            </li> */}
             <li className="flex flex-wrap gap-4 text-base py-3 font-bold">
               Total{" "}
-              <span className="ml-auto">PKR{subtotal + shipping + tax}</span>
+              <span className="ml-auto">PKR {subtotal + shipping}</span>
             </li>
           </ul>
-
+<Link href={"/checkout"}>
           <button
+          disabled={cart?.length > 0 ? false : true}
             type="button"
             className="mt-6 text-base px-4 py-2 tracking-wide w-full bg-black hover:bg-slate-800 text-white"
-          >
-            Make Payment
+            >
+            Place Order
           </button>
+            </Link>
         </div>
       </div>
     </div>

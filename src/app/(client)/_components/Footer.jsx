@@ -2,6 +2,7 @@ import React from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Services } from "../data/data";
+import Link from "next/link";
 
 const Footer = () => {
   const FooterText = "All rights are reserved store_name 2025";
@@ -78,15 +79,25 @@ const Footer = () => {
 
           <div className="flex flex-col gap-[10px] cursor-pointer">
             <p className="text-[15px] font-[600]">Pages</p>
+           <Link href={"/return-policy"}>
             <ul className="text-[12px] font-[400]">Return Policy</ul>
+           </Link>
+           <Link href={"/shipping-policy"}>
             <ul className="text-[12px] font-[400]">Shipping Policy</ul>
+           </Link>
+           <Link href={"/privacy-policy"}>
             <ul className="text-[12px] font-[400]">Privacy Policy</ul>
+           </Link>
           </div>
 
           <div className="flex flex-col gap-[10px] cursor-pointer">
             <p className="text-[15px] font-[600]">Read</p>
+            <Link href={"/about-us"}>
             <ul className="text-[12px] font-[400]">About Us</ul>
+            </Link>
+            <Link href={"/about-us"}>
             <ul className="text-[12px] font-[400]">Contact</ul>
+            </Link>
           </div>
         </div>
       </div>

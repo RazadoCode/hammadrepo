@@ -1,3 +1,5 @@
+"use client"
+
 import React from "react";
 import { CollectionImages } from "../data/data";
 
@@ -7,8 +9,14 @@ import {
   CarouselItem,
 } from "@/components/ui/carousel";
 import Link from "next/link";
+import { useSnapshot } from "valtio";
+import { state } from "../../../../store/store";
+import { urlFor } from "@/sanity/lib/image";
 
 const Collection = () => {
+
+  const {categories}=useSnapshot(state)
+
   return (
     <div className="w-full   ">
       <div className="text-[15px] sm:px-[32px] px-[16px] sm:text-[20px] cursor-pointer font-[700] pt-[20px] pb-[20px] ">
@@ -16,12 +24,12 @@ const Collection = () => {
       </div>
 
       <div className="hidden sm:flex items-center justify-center gap-5 pb-[30px] pt-[20px] ">
-        {CollectionImages.map((item, i) => (
-          <Link href={`/productList/${item.href}`} key={i}>
+        {categories.map((item, i) => (
+          <Link href={`/productList/${item?._id}`} key={i}>
             <div className="flex flex-col sm:w-[172px] sm:h-[172px]">
-              <img src={item.src} className="w-full rounded-full h-full" />
+              <img src={urlFor(item?.image)} className="w-full rounded-full h-full" />
               <p className="flex text-center items-center justify-center cursor-pointer pt-[6px] font-[700]">
-                {item.name}
+                {item?.name}
               </p>
             </div>
           </Link>
@@ -31,16 +39,15 @@ const Collection = () => {
       <div className="sm:hidden block pt-[20px] pb-[20px] ">
         <Carousel className="overflow-hidden">
           <CarouselContent className="w-[200px] h-[200px]">
-            {CollectionImages.map((item, i) => (
+          {categories.map((item, i) => (
               <CarouselItem key={i} className="">
-                <Link href={`/productList/${item.href}`}>
+                <Link href={`/productList/${item?._id}`}>
                   <div className="flex-col flex justify-center text-center w-[172px] rounded-full">
                     <img
-                      src={item.src}
-                      alt={item.alt}
+                      src={urlFor(item?.image)}
                       className="w-full rounded-full h-[172px] cursor-pointer"
                     />
-                    <p className="font-[700] pt-[6px] cursor-pointer">{item.name}</p>
+                    <p className="font-[700] pt-[6px] cursor-pointer">{item?.name}</p>
                   </div>
                 </Link>
               </CarouselItem>
