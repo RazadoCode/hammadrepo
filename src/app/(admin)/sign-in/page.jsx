@@ -30,12 +30,12 @@ const AdminForm = () => {
         passwor === process.env.NEXT_PUBLIC_PASSWORD
       ) {
         setMsg(null);
-        // state.username=usernam
-        // state.password = passwor
-        // state.userStatus=true
         localStorage.setItem("username", usernam);
         localStorage.setItem("password", passwor);
         localStorage.setItem("userStatus", true);
+        state.username=usernam
+        state.password = passwor
+        state.userStatus=true
         // router.push("/adminPannel")
         router.push("/adminPannel");
       } else {
